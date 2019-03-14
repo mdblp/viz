@@ -1,6 +1,6 @@
 {
   "name": "@tidepool/viz",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tidepool data visualization for diabetes device data.",
   "keywords": [
     "data visualization"
@@ -28,7 +28,7 @@
     "url": "git+https://github.com/mdblp/viz.git"
   },
   "publishConfig": {
-    "registry": "https://nexus.ci.diabeloop.eu/repository/your-loops-npm/"
+    "registry": "https://nexus.ci.diabeloop.eu/repository/npm-dev/"
   },
   "engines": {
     "node": ">=6.x",
