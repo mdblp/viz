@@ -28,7 +28,7 @@
     "url": "git+https://github.com/mdblp/viz.git"
   },
   "publishConfig": {
-    "registry": "https://nexus.ci.diabeloop.eu/repository/npm-dev/"
+    "registry": "https://nexus.ci.diabeloop.eu/repository/your-loops-npm/"
   },
   "engines": {
     "node": ">=6.x",
