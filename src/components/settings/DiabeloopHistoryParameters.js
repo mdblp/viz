@@ -21,6 +21,10 @@ export default class HistoryTable extends Table {
   static get columns() {
     return [
       {
+        key: 'level',
+        label: t('Level'),
+      },      
+      {
         key: 'parameterChange',
         label: t('Parameter'),
 
@@ -31,9 +35,6 @@ export default class HistoryTable extends Table {
 
       },
       {
-        key: 'level',
-        label: t('Level'),
-      }, {
         key: 'parameterDate',
         label: t('Date'),
       },
@@ -133,7 +134,10 @@ export default class HistoryTable extends Table {
           let latestDate = new Date(0);
 
           // Compare b->a since there is a reverse order at the end
-          parameters.sort((a, b) => b.name.localeCompare(a.name));
+          parameters.sort((a, b) =>  
+            b.level.toString().localeCompare(a.level.toString())
+            || b.name.localeCompare(a.name)
+            );
 
           for (let j = 0; j < nParameters; j++) {
             const parameter = parameters[j];
