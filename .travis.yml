@@ -27,8 +27,7 @@ services:
   - docker
 
 script:
-  - npm test
-  - ./artifact.sh
+  - ./build.sh
 
 matrix:
   allow_failures:
