@@ -1,6 +1,5 @@
-const calc = require('postcss-calc');
-const cssVariables = require('postcss-custom-properties');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  plugins: [calc, cssVariables],
+  plugins: [autoprefixer],
 };

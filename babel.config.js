@@ -6,8 +6,8 @@ module.exports = function babelConfig(api) {
   ];
 
   const plugins = [
-    'react-hot-loader/babel',
     '@babel/plugin-transform-modules-commonjs',
+    '@babel/plugin-proposal-class-properties',
   ];
 
   const env = api.env();

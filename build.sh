@@ -2,13 +2,13 @@
 set -ev
 
 echo "Installing"
-npm install
+npm install --no-optional
 
 echo 'Run testing'
 npm test
 npm run build
 
-if [ "${TRAVIS_NODE_VERSION}" != "10.14.2" ]; then
+if [ "${TRAVIS_NODE_VERSION}" != "10.15.3" ]; then
     exit 0
 fi
 

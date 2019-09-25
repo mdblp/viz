@@ -14,16 +14,20 @@ const localIdentName = isTest
   : '[name]--[local]--[hash:base64:5]';
 
 const styleLoaderConfiguration = {
-  test: /\.css$/,
+  test: /\.css$/i,
   use: [
-    'style-loader',
     {
-      loader: 'css-loader?sourceMap',
-      query: {
+      loader: 'style-loader',
+    },
+    {
+      loader: 'css-loader',
+      options: {
+        url: true,
         importLoaders: 1,
-        localIdentName,
-        modules: true,
-        sourceMap: true,
+        modules: {
+          localIdentName,
+        },
+        sourceMap: isDev || isTest,
       },
     },
     {
@@ -43,10 +47,20 @@ const babelLoaderConfiguration = {
     path.resolve(appDirectory, 'test'),
     path.resolve(appDirectory, 'data'),
   ],
+  exclude: /(node_modules|bower_components)/,
   use: {
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
+      presets: [
+        '@babel/preset-env',
+        '@babel/preset-react',
+        'babel-preset-react-app',
+      ],
+      plugins: [
+        '@babel/plugin-transform-modules-commonjs',
+        '@babel/plugin-proposal-class-properties',
+      ],
     },
   },
 };

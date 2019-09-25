@@ -1,5 +1,5 @@
 ### Stage 0 - Base image
-FROM node:10.14.2-alpine as base
+FROM node:10.15-alpine as base
 WORKDIR /app
 RUN mkdir -p dist node_modules && chown -R node:node .
 
@@ -26,7 +26,7 @@ FROM base as dependencies
 USER node
 COPY package.json .
 # Ignore scripts during install to prevent `prepare` and `prepublishOnly` from running
-RUN npm install --ignore-scripts
+RUN npm install --ignore-scripts --no-optional
 
 
 ### Stage 3 - Development root with Chromium installed for unit tests

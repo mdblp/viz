@@ -4,19 +4,16 @@ sudo: false
 
 language: node_js
 
-dist: trusty
+dist: bionic
 
 node_js:
-  - "10.14.2"
+  - "10.15.3"
   - "stable"
 
 cache:
   npm: true
   directories:
     - node_modules
-
-before_install:
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 addons:
   chrome: stable
