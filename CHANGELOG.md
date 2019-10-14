@@ -5,6 +5,12 @@ This node package is a dependency of Blip and was forked from tidepool/viz.
 ### Added
 - [PT-573] Integrate latest changes from Tidepool Viz [v1.8.0](https://github.com/tidepool-org/viz/releases/tag/v1.8.0)
 
+## 0.4.4 - 2019-10-11 
+### Fixed
+- [PT-703] Fix avg Daily insulin is not correct on Basics page
+### Added 
+- [PT-710] Distinguish rescuecarbs in Viz
+
 ## 0.4.3
 ### Fixed
 - [PT-640] Fix display of parameter history is not accurate
