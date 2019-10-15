@@ -1,5 +1,5 @@
 ### Stage 0 - Base image
-FROM node:10.15-alpine as base
+FROM node:10.16-alpine as base
 WORKDIR /app
 RUN mkdir -p dist node_modules && chown -R node:node .
 

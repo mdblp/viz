@@ -7,7 +7,7 @@ language: node_js
 dist: bionic
 
 node_js:
-  - "10.15.3"
+  - "10.16.3"
   - "stable"
 
 cache:
