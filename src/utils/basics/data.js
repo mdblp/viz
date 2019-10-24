@@ -359,7 +359,7 @@ export function summarizeTagFn(dataObj, summary) {
  * @param {Object} dataObj
  * @param {Number} total
  * @param {String} mostRecentDay
- * @returns
+ * @returns {Number}
  */
 export function averageExcludingMostRecentDay(dataObj, total, mostRecentDay) {
   const mostRecentTotal = dataObj.dataByDate[mostRecentDay] ?

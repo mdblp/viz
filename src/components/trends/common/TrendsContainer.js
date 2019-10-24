@@ -70,7 +70,7 @@ export function getAllDatesInRange(start, end, timePrefs) {
  * @param {String} utc - Zulu timestamp (Integer hammertime also OK)
  * @param {Object} timePrefs - object containing timezoneAware Boolean and timezoneName String
  *
- * @return {JavaScript Date} the closet noon before the input datetime in the given timezone
+ * @return {Date} the closet noon before the input datetime in the given timezone
  */
 export function getLocalizedNoonBeforeUTC(utc, timePrefs) {
   if (utc instanceof Date) {
@@ -91,9 +91,9 @@ export function getLocalizedNoonBeforeUTC(utc, timePrefs) {
  * @param {Object} offset - { amount: integer (+/-), units: 'hour', 'day', &c }
  * @param {Object} timePrefs - object containing timezoneAware Boolean and timezoneName String
  *
- * @return {JavaScript Date} datetime at the specified +/- offset from the input datetime
- *                           inspired by d3-time's offset function: https://github.com/d3/d3-time#interval_offset
- *                           but able to work with an arbitrary timezone
+ * @return {Date} datetime at the specified +/- offset from the input datetime
+  *               inspired by d3-time's offset function: https://github.com/d3/d3-time#interval_offset
+  *               but able to work with an arbitrary timezone
  */
 export function getLocalizedOffset(utc, offset, timePrefs) {
   if (utc instanceof Date) {

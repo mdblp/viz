@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
+DOCS_DIR="$(pwd)"
+cd ..
+
 echo ""
 echo "### Building docs static website with GitBook... ###"
 echo ""
 
-./node_modules/.bin/gitbook build
+${DOCS_DIR}/node_modules/.bin/gitbook build
 
 echo ""
 echo "### Syncing docs static website to web/ directory... ###"
@@ -17,6 +20,7 @@ echo "### Cleaning up GitBook build... ###"
 echo ""
 
 rm -rf _book/
+mv -v web docs/
 
 echo "### Final step is to navigate into web/, confirm the changes and commit them..."
 echo "Then push to gh-pages branch. ###"

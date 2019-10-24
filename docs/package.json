@@ -1,0 +1,23 @@
+{
+  "name": "@tidepool/viz",
+  "version": "1.0.0",
+  "description": "Tidepool data visualization for diabetes device data.",
+  "scripts": {
+    "apidocs": "jsdoc2md ../src/index.js",
+    "build-docs": "sh ../update-gh-pages.sh",
+    "build-storybooks": "build-storybook -c storybook -o web/stories && build-storybook -c storybookDatatypes -o web/diabetes-data-stories",
+    "stories": "NODE_ENV=development start-storybook -c storybook -p 8082 -s ./static",
+    "typestories": "NODE_ENV=development start-storybook -c storybookDatatypes -p 8082"
+  },
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "@storybook/addon-knobs": "^4.0.0",
+    "@storybook/addon-notes": "^5.1.9",
+    "@storybook/addon-viewport": "^4.0.0",
+    "@storybook/addons": "^4.0.0",
+    "@storybook/react": "^4.0.0",
+    "core-js": "^2.6.10",
+    "gitbook-cli": "2.3.2",
+    "jsdoc-to-markdown": "^5.0.1"
+  }
+}

@@ -5,23 +5,18 @@
   "keywords": [
     "data visualization"
   ],
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
-    "apidocs": "jsdoc2md",
     "browser-tests": "NODE_ENV=test karma start --browsers Chrome",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --config package.config.js",
-    "build-docs": "./update-gh-pages.sh",
-    "build-storybooks": "build-storybook -c storybook -o web/stories && build-storybook -c storybookDatatypes -o web/diabetes-data-stories",
     "clean": "NODE_ENV=production rimraf ./dist/*",
     "lint": "eslint src/ stories/ storiesDatatypes/ test/ *.js",
     "prepare": "NODE_ENV=production npm run build",
     "pretest": "eslint src/ test/ *.js",
     "start": "NODE_ENV=development webpack --config package.config.js --watch",
-    "stories": "NODE_ENV=development start-storybook -c storybook -p 8082 -s ./static",
     "test": "TZ=UTC NODE_ENV=test karma start",
-    "test-watch": "TZ=UTC NODE_ENV=test karma start --no-single-run --reporters=mocha",
-    "typestories": "NODE_ENV=development start-storybook -c storybookDatatypes -p 8082"
+    "test-watch": "TZ=UTC NODE_ENV=test karma start --no-single-run --reporters=mocha"
   },
   "repository": {
     "type": "git",
@@ -131,13 +126,5 @@
   },
   "resolutions": {
     "sundial/moment-timezone": "0.5.26"
-  },
-  "optionalDependencies": {
-    "@storybook/addon-knobs": "^4.0.0",
-    "@storybook/addon-notes": "^5.1.9",
-    "@storybook/addon-viewport": "^4.0.0",
-    "@storybook/addons": "^4.0.0",
-    "@storybook/react": "^4.0.0",
-    "jsdoc-to-markdown": "^5.0.1"
   }
 }

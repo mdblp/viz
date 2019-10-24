@@ -178,7 +178,7 @@ export function getSegmentDose(duration, rate) {
 /**
  * Get total basal delivered for a given time range
  * @param {Array} data Array of Tidepool basal data
- * @param {[]String} enpoints ISO date strings for the start, end of the range, in that order
+ * @param {String[]} enpoints ISO date strings for the start, end of the range, in that order
  * @return {Number} Formatted total insulin dose
  */
 export function getTotalBasalFromEndpoints(data, endpoints) {
@@ -204,7 +204,7 @@ export function getTotalBasalFromEndpoints(data, endpoints) {
 /**
  * Get automated and manual basal delivery time for a given time range
  * @param {Array} data Array of Tidepool basal data
- * @param {[]String} enpoints ISO date strings for the start, end of the range, in that order
+ * @param {String[]} enpoints ISO date strings for the start, end of the range, in that order
  * @return {Number} Formatted total insulin dose
  */
 export function getBasalGroupDurationsFromEndpoints(data, endpoints) {
