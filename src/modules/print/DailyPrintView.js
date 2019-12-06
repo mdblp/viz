@@ -64,6 +64,7 @@ import {
 } from '../../utils/constants';
 
 const t = i18next.t.bind(i18next);
+moment.locale(i18next.language);
 
 class DailyPrintView extends PrintView {
   constructor(doc, data, opts) {
@@ -180,7 +181,7 @@ class DailyPrintView extends PrintView {
     const start = _.head(charts).date;
     const end = _.last(charts).date;
 
-    super.newPage(this.getDateRange(start, end, 'YYYY-MM-DD'));
+    super.newPage(this.getDateRange(start, end, t('YYYY-MM-DD')));
     this.renderLegend();
   }
 
@@ -639,7 +640,7 @@ class DailyPrintView extends PrintView {
 
         this.doc.font(this.font).fontSize(this.extraSmallFontSize)
           .text(
-            formatLocalizedFromUTC(loc, this.timePrefs, SIMPLE_HOUR_FORMAT).slice(0, -1),
+            formatLocalizedFromUTC(loc, this.timePrefs, SIMPLE_HOUR_FORMAT),
             xPos,
             topEdge,
             { indent: 3 },

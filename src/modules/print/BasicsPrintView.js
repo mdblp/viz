@@ -18,6 +18,7 @@
 /* eslint-disable lodash/prefer-lodash-method */
 
 import _ from 'lodash';
+import i18next from 'i18next';
 import moment from 'moment';
 
 import PrintView from './PrintView';
@@ -51,10 +52,12 @@ import {
   DIABELOOP,
 } from '../../utils/constants';
 
+const t = i18next.t.bind(i18next);
+
 const siteChangeCannulaImage = require('./images/sitechange-cannula.png');
 const siteChangeReservoirImage = require('./images/sitechange-reservoir.png');
 const siteChangeTubingImage = require('./images/sitechange-tubing.png');
-const siteChangeReservoirDiabeloopImage =  require('./images/diabeloop/sitechange-diabeloop.png');
+const siteChangeReservoirDiabeloopImage = require('./images/diabeloop/sitechange-diabeloop.png');
 
 const siteChangeImages = {
   [SITE_CHANGE_CANNULA]: siteChangeCannulaImage,
@@ -202,7 +205,7 @@ class BasicsPrintView extends PrintView {
     this.renderCalendarSection({
       title: {
         text: this.data.sections.siteChanges.title,
-        subText: siteChangesSubTitle ? `from '${this.data.sections.siteChanges.subTitle}'` : false,
+        subText: siteChangesSubTitle ? `${t('from ')}${this.data.sections.siteChanges.subTitle}` : false,
       },
       data: _.get(
         this.data.data,
@@ -688,7 +691,7 @@ class BasicsPrintView extends PrintView {
 
       const chunkedDayMap = _.chunk(_.map(this.calendar.days, (day, index) => {
         const date = moment.utc(day.date);
-        const dateLabelMask = (index === 0 || date.date() === 1) ? 'MMM D' : 'D';
+        const dateLabelMask = (index === 0 || date.date() === 1) ? t('MMM D') : t('D');
 
         let dayType = _.get(data, `${day.date}.type`, day.type);
 
@@ -703,6 +706,8 @@ class BasicsPrintView extends PrintView {
         return {
           color: this.colors[type],
           count: _.get(data, `${day.date}.total`, _.get(data, `${day.date}.count`, 0)),
+          // translation missing
+          // dayOfWeek: date.format(t('ddd')),
           dayOfWeek: date.format('ddd'),
           daysSince: _.get(data, `${day.date}.daysSince`),
           label: date.format(dateLabelMask),

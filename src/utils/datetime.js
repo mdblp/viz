@@ -112,7 +112,7 @@ export function getTimezoneFromTimePrefs(timePrefs) {
 export function formatBirthdate(patient) {
   const bday = _.get(patient, ['profile', 'patient', 'birthday'], '');
   if (bday) {
-    return utcFormat('%b %-d, %Y')(Date.parse(bday));
+    return utcFormat(t('%b %-d, %Y'))(Date.parse(bday));
   }
   return '';
 }
@@ -138,7 +138,7 @@ export function formatClocktimeFromMsPer24(milliseconds, format = HOUR_MINUTE_FO
  * @return {String} formatted current date, e.g., 'Jul 4, 2017';
  */
 export function formatCurrentDate() {
-  return timeFormat('%b %-d, %Y')(new Date());
+  return timeFormat(t('%b %-d, %Y'))(new Date());
 }
 
 /**
@@ -166,8 +166,8 @@ export function formatDateRange(startDate, endDate, format) {
   const end = moment.utc(endDate, format);
 
   const isSameYear = start.isSame(end, 'year');
-  const startFormat = isSameYear ? start.format('MMM D') : start.format('MMM D, YYYY');
-  const endFormat = end.format('MMM D, YYYY');
+  const startFormat = isSameYear ? start.format(t('MMM D')) : start.format(t('MMM D, YYYY'));
+  const endFormat = end.format(t('MMM D, YYYY'));
 
   const formattedRange = `${startFormat} - ${endFormat}`;
 
