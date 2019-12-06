@@ -48,11 +48,13 @@ import {
   SITE_CHANGE_CANNULA,
   SITE_CHANGE_RESERVOIR,
   SITE_CHANGE_TUBING,
+  DIABELOOP,
 } from '../../utils/constants';
 
 const siteChangeCannulaImage = require('./images/sitechange-cannula.png');
 const siteChangeReservoirImage = require('./images/sitechange-reservoir.png');
 const siteChangeTubingImage = require('./images/sitechange-tubing.png');
+const siteChangeReservoirDiabeloopImage =  require('./images/diabeloop/sitechange-diabeloop.png');
 
 const siteChangeImages = {
   [SITE_CHANGE_CANNULA]: siteChangeCannulaImage,
@@ -68,6 +70,9 @@ class BasicsPrintView extends PrintView {
     this.source = _.get(latestPumpUpload, 'source', '').toLowerCase();
     this.manufacturer = this.source === 'carelink' ? 'medtronic' : this.source;
 
+    if (this.source === DIABELOOP.toLowerCase()) {
+      siteChangeImages[SITE_CHANGE_RESERVOIR] = siteChangeReservoirDiabeloopImage;
+    }
     // Process basics data
     const { source: bgSource, cgmStatus } = determineBgDistributionSource(this.data);
     _.assign(this, { bgSource, cgmStatus });
