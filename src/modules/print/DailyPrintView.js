@@ -45,9 +45,9 @@ import {
 import {
   formatLocalizedFromUTC,
   formatDuration,
-  HOUR_MINUTE_FORMAT_NOSPACE,
-  SIMPLE_HOUR_FORMAT,
-  LONG_FORMAT,
+  getHourMinuteFormatNoSpace,
+  getSimpleHourFormat,
+  getLongFormat,
 } from '../../utils/datetime';
 import {
   formatBgValue,
@@ -64,7 +64,6 @@ import {
 } from '../../utils/constants';
 
 const t = i18next.t.bind(i18next);
-moment.locale(i18next.language);
 
 class DailyPrintView extends PrintView {
   constructor(doc, data, opts) {
@@ -365,7 +364,7 @@ class DailyPrintView extends PrintView {
       .fillOpacity(1)
       .font(this.boldFont)
       .fontSize(this.summaryHeaderFontSize)
-      .text(moment(date, 'YYYY-MM-DD').format(LONG_FORMAT), this.margins.left, topEdge);
+      .text(moment(date, 'YYYY-MM-DD').format(getLongFormat()), this.margins.left, topEdge);
 
     const yPos = (function (doc) { // eslint-disable-line func-names
       let value = topEdge + doc.currentLineHeight() * 1.5;
@@ -640,7 +639,7 @@ class DailyPrintView extends PrintView {
 
         this.doc.font(this.font).fontSize(this.extraSmallFontSize)
           .text(
-            formatLocalizedFromUTC(loc, this.timePrefs, SIMPLE_HOUR_FORMAT),
+            formatLocalizedFromUTC(loc, this.timePrefs, getSimpleHourFormat()),
             xPos,
             topEdge,
             { indent: 3 },
@@ -832,7 +831,7 @@ class DailyPrintView extends PrintView {
         const displayTime = formatLocalizedFromUTC(
           bolus.utc,
           this.timePrefs,
-          HOUR_MINUTE_FORMAT_NOSPACE
+          getHourMinuteFormatNoSpace()
         ).slice(0, -1);
         this.doc.text(
           displayTime,

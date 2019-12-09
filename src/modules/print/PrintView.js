@@ -51,10 +51,9 @@ const t = i18next.t.bind(i18next);
 // branding should make use of artifact.sh to download specific branding artifacts such as images
 const logo = require('./images/diabeloop/ylp_logo_small.png');
 
-moment.locale(i18next.language);
-
 class PrintView {
   constructor(doc, data = {}, opts) {
+    moment.locale(i18next.language);
     this.doc = doc;
 
     this.title = opts.title;
