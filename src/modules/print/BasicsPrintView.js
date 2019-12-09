@@ -793,7 +793,7 @@ class BasicsPrintView extends PrintView {
           .stroke();
 
         if (isSiteChange) {
-          const daysSinceLabel = daysSince === 1 ? 'day' : 'days';
+          const daysSinceLabel = daysSince === 1 ? t('day') : t('days');
 
           const siteChangeType = this.data.sections.siteChanges.type;
           const imageWidth = width / 2.5;
