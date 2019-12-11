@@ -28,8 +28,8 @@ const YAxisLabels = (props) => {
   const { bgBounds } = bgPrefs;
 
   return (
-    <g id="yAxisLabels">
-      {_.map(['targetLowerBound', 'targetUpperBound', 'veryHighThreshold', 'veryLowThreshold'],
+    <g id="yAxisLabels">{
+      _.map(['targetLowerBound', 'targetUpperBound', 'veryHighThreshold', 'veryLowThreshold'],
         (boundKey) => (
           <g id="yAxisLabel" key={boundKey}>
             <text
