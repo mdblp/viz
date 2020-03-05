@@ -23,11 +23,11 @@ if (_.get(i18next, 'options.returnEmptyString') === undefined) {
 
 export const dailyDoseUnitOptions = [
   {
-    label: 'kg',
+    label: t('kg'),
     value: 'kg',
   },
   {
-    label: 'lb',
+    label: t('lb'),
     value: 'lb',
   },
 ];
@@ -396,7 +396,7 @@ export const getStatData = (data, type, opts = {}) => {
           id: 'insulin',
           input: {
             id: 'weight',
-            label: 'Weight',
+            label: t('Weight'),
             suffix: {
               id: 'units',
               options: dailyDoseUnitOptions,
@@ -406,7 +406,7 @@ export const getStatData = (data, type, opts = {}) => {
             value: opts.inputValue ? ensureNumeric(opts.inputValue) : undefined,
           },
           output: {
-            label: 'Daily Dose ÷ Weight',
+            label: t('Daily Dose ÷ Weight'),
             type: 'divisor',
             dataPaths: {
               dividend: 'data.0',

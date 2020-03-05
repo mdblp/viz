@@ -16,10 +16,12 @@
  */
 
 import _ from 'lodash';
+import i18next from 'i18next';
 
 import * as datetime from '../datetime';
 import * as format from '../format';
 
+const t = i18next.t.bind(i18next);
 const DISPLAY_PRECISION_PLACES = 3;
 
 /**
@@ -34,7 +36,7 @@ export function noData(val) {
 
 /**
  * deviceName
- * @param  {String} manufacturer one of: animas, insulet, medtronic, tandem
+ * @param  {String} manufacturer one of: animas, insulet, medtronic, tandem, diabeloop
  *
  * @return {String}              name for given manufacturer
  */
@@ -44,6 +46,7 @@ export function deviceName(manufacturer) {
     insulet: 'OmniPod',
     medtronic: 'Medtronic',
     tandem: 'Tandem',
+    diabeloop: 'Diabeloop',
   };
   return DEVICE_DISPLAY_NAME_BY_MANUFACTURER[manufacturer] || manufacturer;
 }
@@ -144,7 +147,7 @@ export function getTotalBasalRates(scheduleData) {
  * getScheduleLabel
  * @param  {String} scheduleName  basal schedule name
  * @param  {String} activeName    name of active basal schedule at time of upload
- * @param  {String} deviceKey    one of: animas, carelink, insulet, medtronic, tandem
+ * @param  {String} deviceKey    one of: animas, carelink, insulet, medtronic, tandem, diabeloop
  * @param  {Boolean} noUnits      whether units should be included in label object
  *
  * @return {Object}              object representing basal schedule label
@@ -157,8 +160,8 @@ export function getScheduleLabel(scheduleName, activeName, deviceKey, noUnits) {
   }
   return {
     main: displayName,
-    secondary: scheduleName === activeName ? 'Active at upload' : '',
-    units: noUnits ? '' : 'U/hr',
+    secondary: scheduleName === activeName ? t('Active at upload') : '',
+    units: noUnits ? '' : t('U/hr'),
   };
 }
 
@@ -197,12 +200,12 @@ export function getTimedSchedules(settingsData) {
 export function getDeviceMeta(settingsData = {}, timePrefs) {
   const utc = settingsData.normalTime;
   const uploadedTime = utc ?
-    datetime.formatLocalizedFromUTC(utc, timePrefs, 'MMM D, YYYY') :
+    datetime.formatLocalizedFromUTC(utc, timePrefs, datetime.getLongDayFormat()) :
     false;
   return {
-    schedule: settingsData.activeSchedule || 'unknown',
-    uploaded: uploadedTime || 'unknown',
-    serial: settingsData.deviceSerialNumber || 'unknown',
+    schedule: settingsData.activeSchedule || t('unknown'),
+    uploaded: uploadedTime || t('unknown'),
+    serial: settingsData.deviceSerialNumber || t('unknown'),
   };
 }
 
@@ -366,7 +369,7 @@ export function processTimedSettings(pumpSettings, schedule, bgUnits) {
  */
 export function startTimeAndValue(valueKey) {
   return [
-    { key: 'start', label: 'Start time' },
-    { key: valueKey, label: 'Value' },
+    { key: 'start', label: t('Start time') },
+    { key: valueKey, label: t('Value') },
   ];
 }

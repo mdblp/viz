@@ -45,11 +45,70 @@ import _ from 'lodash';
 import { utcFormat, timeFormat } from 'd3-time-format';
 import moment from 'moment-timezone';
 import sundial from 'sundial';
+import i18next from 'i18next';
+
+const t = i18next.t.bind(i18next);
 
 export const THIRTY_MINS = 1800000;
 export const ONE_HR = 3600000;
 export const THREE_HRS = 10800000;
 export const TWENTY_FOUR_HRS = 86400000;
+
+/**
+ * getHourMinuteFormat
+ * @returns string according to translation
+ */
+export function getHourMinuteFormat() {
+  return t('h:mm a');
+}
+
+/**
+ * getHourMinuteFormatNoSpace
+ * @returns string according to translation
+ */
+export function getHourMinuteFormatNoSpace() {
+  return t('h:mma');
+}
+
+/**
+ * getSimpleHourFormat
+ * @returns string according to translation
+ */
+export function getSimpleHourFormat() {
+  return t('ha');
+}
+
+/**
+ * getDayFormat
+ * @returns string according to translation
+ */
+export function getDayFormat() {
+  return t('dddd, MMMM D');
+}
+
+/**
+ * getLongDayFormat
+ * @returns string according to translation
+ */
+export function getLongDayFormat() {
+  return t('MMM D, YYYY');
+}
+
+/**
+ * getSimpleHourFormatSpace
+ * @returns string according to translation
+ */
+export function getSimpleHourFormatSpace() {
+  return t('h a');
+}
+
+/**
+ * getLongFormat
+ * @returns string according to translation
+ */
+export function getLongFormat() {
+  return t('ddd, MMM D, Y');
+}
 
 /**
  * getMsPer24
@@ -116,7 +175,7 @@ export function getTimezoneFromTimePrefs(timePrefs = {}) {
 export function formatBirthdate(patient) {
   const bday = _.get(patient, ['profile', 'patient', 'birthday'], '');
   if (bday) {
-    return utcFormat('%b %-d, %Y')(Date.parse(bday));
+    return utcFormat(t('%b %-d, %Y'))(Date.parse(bday));
   }
   return '';
 }
@@ -129,7 +188,7 @@ export function formatBirthdate(patient) {
  *
  * @return {String} formatted clocktime, e.g., '12:05 pm'
  */
-export function formatClocktimeFromMsPer24(milliseconds, format = 'h:mm a') {
+export function formatClocktimeFromMsPer24(milliseconds, format = getHourMinuteFormat()) {
   if (_.isNull(milliseconds) || _.isUndefined(milliseconds) ||
     milliseconds < 0 || milliseconds > TWENTY_FOUR_HRS || milliseconds instanceof Date) {
     throw new Error('First argument must be a value in milliseconds per twenty-four hour day!');
@@ -142,7 +201,7 @@ export function formatClocktimeFromMsPer24(milliseconds, format = 'h:mm a') {
  * @return {String} formatted current date, e.g., 'Jul 4, 2017';
  */
 export function formatCurrentDate() {
-  return timeFormat('%b %-d, %Y')(new Date());
+  return timeFormat(t('%b %-d, %Y'))(new Date());
 }
 
 /**
@@ -170,8 +229,8 @@ export function formatDateRange(startDate, endDate, format) {
   const end = moment.utc(endDate, format);
 
   const isSameYear = start.isSame(end, 'year');
-  const startFormat = isSameYear ? start.format('MMM D') : start.format('MMM D, YYYY');
-  const endFormat = end.format('MMM D, YYYY');
+  const startFormat = isSameYear ? start.format(t('MMM D')) : start.format(t('MMM D, YYYY'));
+  const endFormat = end.format(t('MMM D, YYYY'));
 
   const formattedRange = `${startFormat} - ${endFormat}`;
 
@@ -264,7 +323,7 @@ export function formatDuration(duration, opts = {}) {
  *
  * @return {String} formatted datetime, e.g., 'Sunday, January 1'
  */
-export function formatLocalizedFromUTC(utc, timePrefs, format = 'dddd, MMMM D') {
+export function formatLocalizedFromUTC(utc, timePrefs, format = getDayFormat()) {
   if (utc instanceof Date) {
     throw new Error('`utc` must be a ISO-formatted String timestamp or integer hammertime!');
   }

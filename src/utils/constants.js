@@ -59,12 +59,6 @@ export const DEFAULT_BG_BOUNDS = {
 
 export const LBS_PER_KG = 2.2046226218;
 
-const ONE_WEEK = 7;
-const TWO_WEEKS = 14;
-const FOUR_WEEKS = 28;
-
-export const trends = { extentSizes: { ONE_WEEK, TWO_WEEKS, FOUR_WEEKS } };
-
 export const MS_IN_DAY = 864e5;
 export const MS_IN_HOUR = 864e5 / 24;
 export const MS_IN_MIN = MS_IN_HOUR / 60;
@@ -88,6 +82,7 @@ export const INSULET = 'Insulet';
 export const TANDEM = 'Tandem';
 export const ANIMAS = 'Animas';
 export const MEDTRONIC = 'Medtronic';
+export const DIABELOOP = 'Diabeloop';
 
 export const pumpVocabulary = {
   [ANIMAS]: {
@@ -112,6 +107,11 @@ export const pumpVocabulary = {
     [SITE_CHANGE_TUBING]: t('Fill Tubing'),
     [SITE_CHANGE_CANNULA]: t('Fill Cannula'),
   },
+  [DIABELOOP]: {
+    [SITE_CHANGE_RESERVOIR]: t('Change Cartridge'),
+    [AUTOMATED_DELIVERY]: t('Loop mode'),
+    [SCHEDULED_DELIVERY]: t('Loop mode off'),
+  },
   default: {
     [SITE_CHANGE_RESERVOIR]: t('Change Cartridge'),
     [SITE_CHANGE_TUBING]: t('Fill Tubing'),
@@ -123,6 +123,7 @@ export const pumpVocabulary = {
 
 export const AUTOMATED_BASAL_DEVICE_MODELS = {
   [MEDTRONIC]: ['1580', '1581', '1582', '1780', '1781', '1782'],
+  [DIABELOOP]: true,
 };
 
 export const BG_COLORS = {

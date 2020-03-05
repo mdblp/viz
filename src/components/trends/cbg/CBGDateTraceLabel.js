@@ -15,11 +15,12 @@
  * == BSD2 LICENSE ==
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import i18next from 'i18next';
+import moment from 'moment';
 
 import Tooltip from '../../common/tooltips/Tooltip';
-
-import { utcFormat } from 'd3-time-format';
 
 import styles from './CBGDateTraceLabel.css';
 
@@ -28,7 +29,7 @@ const CBGDateTraceLabel = (props) => {
     return null;
   }
   const { focusedDateTrace: { data: { localDate: date }, position } } = props;
-  const formattedDate = utcFormat('%A, %B %-d')(Date.parse(date));
+  const formattedDate = moment.utc(date).format(i18next.t('dddd, MMMM D'));
   return (
     <div className={styles.container}>
       <Tooltip

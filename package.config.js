@@ -61,6 +61,4 @@ packageConfig.plugins = [
   }),
 ];
 
-packageConfig.mode = 'production';
-
 module.exports = packageConfig;

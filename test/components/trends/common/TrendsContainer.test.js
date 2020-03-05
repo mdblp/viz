@@ -280,6 +280,7 @@ describe('TrendsContainer', () => {
     before(() => {
       minimalData = shallow(
         <TrendsContainer {...props} {...mgdl} {...makeDataProp(justOneDatum())} />,
+        { disableLifecycleMethods: false }
       );
     });
 
@@ -299,7 +300,7 @@ describe('TrendsContainer', () => {
             {...mgdl}
             {...makeDataProp(justOneDatum())}
             initialDatetimeLocation="2016-03-15T19:00:00.000Z"
-          />
+          />, { disableLifecycleMethods: false }
         );
 
         withInitialDatetimeLocation.instance().mountData();
@@ -328,7 +329,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(justOneDatum())}
-          />
+          />, { disableLifecycleMethods: false }
         );
         expect(markTrendsViewed.callCount).to.equal(1);
       });
@@ -340,7 +341,7 @@ describe('TrendsContainer', () => {
             {..._.merge({}, props, { touched: true })}
             {...mgdl}
             {...makeDataProp(justOneDatum())}
-          />
+          />, { disableLifecycleMethods: false }
         );
         expect(markTrendsViewed.callCount).to.equal(0);
       });
@@ -352,7 +353,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp([...justOneDatum(), ...justOneDatum(undefined, 'smbg')])}
-          />
+          />, { disableLifecycleMethods: false }
         );
         expect(onSwitchBgDataSource.callCount).to.equal(1);
       });
@@ -364,7 +365,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(sevenDaysData())}
-          />
+          />, { disableLifecycleMethods: false }
         );
         expect(onSwitchBgDataSource.callCount).to.equal(0);
       });
@@ -376,7 +377,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(sevenDaysData(devices.libre))}
-          />
+          />, { disableLifecycleMethods: false }
         );
         expect(onSwitchBgDataSource.callCount).to.equal(0);
       });
@@ -388,7 +389,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(sevenDaysDataMixedMinimum())}
-          />
+          />, { disableLifecycleMethods: false }
         );
         expect(onSwitchBgDataSource.callCount).to.equal(0);
       });
@@ -400,7 +401,7 @@ describe('TrendsContainer', () => {
             {..._.merge({}, props, { trendsState: { touched: true } })}
             {...mgdl}
             {...makeDataProp(justOneDatum())}
-          />
+          />, { disableLifecycleMethods: false }
         );
         expect(onSwitchBgDataSource.callCount).to.equal(0);
       });
@@ -412,7 +413,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(justOneDatum(), { cbg: true, smbg: false })}
-          />
+          />, { disableLifecycleMethods: false }
         );
         expect(onSwitchBgDataSource.callCount).to.equal(0);
       });
@@ -435,7 +436,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(justOneDatum())}
-          />
+          />, { disableLifecycleMethods: false }
         );
         sinon.assert.callCount(mountDataSpy, 1);
       });
@@ -462,7 +463,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(justOneDatum())}
-          />
+          />, { disableLifecycleMethods: false }
         );
         mountDataSpy.resetHistory();
         sinon.assert.callCount(mountDataSpy, 0);
@@ -480,7 +481,7 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(justOneDatum())}
-          />
+          />, { disableLifecycleMethods: false }
         );
         mountDataSpy.resetHistory();
         sinon.assert.callCount(mountDataSpy, 0);
@@ -495,7 +496,8 @@ describe('TrendsContainer', () => {
             {...props}
             {...mgdl}
             {...makeDataProp(justOneDatum())}
-          />
+          />,
+          { disableLifecycleMethods: false }
         );
         mountDataSpy.resetHistory();
         sinon.assert.callCount(mountDataSpy, 0);
@@ -524,7 +526,8 @@ describe('TrendsContainer', () => {
       describe('mg/dL blood glucose units', () => {
         before(() => {
           enoughCbgData = shallow(
-            <TrendsContainer {...props} {...mgdl} {...makeDataProp(sevenDaysData())} />
+            <TrendsContainer {...props} {...mgdl} {...makeDataProp(sevenDaysData())} />,
+            { disableLifecycleMethods: false }
           );
         });
 
@@ -551,10 +554,12 @@ describe('TrendsContainer', () => {
       describe('mmol/L blood glucose units', () => {
         before(() => {
           enoughCbgDataMmol = shallow(
-            <TrendsContainer {...props} {...mmoll} {...makeDataProp(sevenDaysDataMmol())} />
+            <TrendsContainer {...props} {...mmoll} {...makeDataProp(sevenDaysDataMmol())} />,
+            { disableLifecycleMethods: false }
           );
           minimalDataMmol = shallow(
-            <TrendsContainer {...props} {...mmoll} {...makeDataProp(justOneDatumMmol())} />
+            <TrendsContainer {...props} {...mmoll} {...makeDataProp(justOneDatumMmol())} />,
+            { disableLifecycleMethods: false }
           );
         });
 
@@ -593,7 +598,7 @@ describe('TrendsContainer', () => {
               {...mgdl}
               {...makeDataProp(justOneDatum())}
               initialDatetimeLocation="2016-03-15T19:00:00.000Z"
-            />
+            />, { disableLifecycleMethods: false }
           );
         });
 
@@ -753,7 +758,8 @@ describe('TrendsContainer', () => {
     describe('render', () => {
       it('should render `TrendsSVGContainer`', () => {
         const wrapper = shallow(
-          <TrendsContainer {...props} {...mgdl} {...makeDataProp(justOneDatum())} />
+          <TrendsContainer {...props} {...mgdl} {...makeDataProp(justOneDatum())} />,
+          { disableLifecycleMethods: false }
         );
         expect(wrapper.find(TrendsSVGContainer)).to.have.length(1);
       });

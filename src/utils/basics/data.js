@@ -35,6 +35,7 @@ import {
   TANDEM,
   ANIMAS,
   MEDTRONIC,
+  DIABELOOP,
   pumpVocabulary,
 } from '../constants';
 
@@ -182,7 +183,7 @@ export function getSiteChangeSource(patient = {}, manufacturer) {
     if (!_.includes(allowedSources, siteChangeSource)) {
       siteChangeSource = SITE_CHANGE_TYPE_UNDECLARED;
     }
-  } else if (manufacturer === _.lowerCase(INSULET)) {
+  } else if (manufacturer === _.lowerCase(INSULET) || manufacturer === _.lowerCase(DIABELOOP)) {
     siteChangeSource = SITE_CHANGE_RESERVOIR;
   }
 

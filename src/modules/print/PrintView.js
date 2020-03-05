@@ -21,6 +21,7 @@ import _ from 'lodash';
 import PdfTable from 'voilab-pdf-table';
 import PdfTableFitColumn from 'voilab-pdf-table/plugins/fitcolumn';
 import i18next from 'i18next';
+import moment from 'moment';
 
 import {
   getOffset,
@@ -50,10 +51,13 @@ import { BG_COLORS, MS_IN_MIN } from '../../utils/constants';
 
 const t = i18next.t.bind(i18next);
 
-const logo = require('./images/tidepool-logo-408x46.png');
+// TO_DO have a configuration variable to support specific branding or not like done e.g. in Blip
+// branding should make use of artifact.sh to download specific branding artifacts such as images
+const logo = require('./images/diabeloop/ylp_logo_small.png');
 
 class PrintView {
   constructor(doc, data = {}, opts) {
+    moment.locale(i18next.language);
     this.doc = doc;
 
     this.title = opts.title;
@@ -800,7 +804,7 @@ class PrintView {
   }
 
   renderLogo() {
-    this.logoWidth = 100;
+    this.logoWidth = 80;
     const xOffset = this.doc.page.width - this.logoWidth - this.margins.right;
     const yOffset = this.margins.top + 5;
 
@@ -884,7 +888,7 @@ class PrintView {
     const helpText = t('Questions or feedback? Please email support@tidepool.org' +
     ' or visit support.tidepool.org.');
 
-    const printDateText = `Printed on: ${formatCurrentDate()}`;
+    const printDateText = t('Printed on: ') + formatCurrentDate();
     const printDateWidth = this.doc.widthOfString(printDateText);
 
     const pageCountWidth = this.doc.widthOfString('Page 1 of 1');

@@ -21,7 +21,8 @@ import { extent } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
 import { utcDay } from 'd3-time';
 import moment from 'moment-timezone';
-import React, { PropTypes, PureComponent } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import TrendsSVGContainer from './TrendsSVGContainer';
 
@@ -31,15 +32,12 @@ import {
   MMOLL_CLAMP_TOP,
   MGDL_UNITS,
   MMOLL_UNITS,
-  trends,
   CGM_DATA_KEY,
   BGM_DATA_KEY,
 } from '../../../utils/constants';
 
 import * as datetime from '../../../utils/datetime';
 import { weightedCGMCount } from '../../../utils/bloodglucose';
-
-const { extentSizes: { ONE_WEEK, TWO_WEEKS, FOUR_WEEKS } } = trends;
 
 /**
  * getAllDatesInRange
@@ -103,7 +101,7 @@ export function getLocalizedOffset(utc, offset, timePrefs) {
     .toDate();
 }
 
-export class TrendsContainer extends PureComponent {
+export class TrendsContainer extends React.Component {
   static propTypes = {
     activeDays: PropTypes.shape({
       monday: PropTypes.bool.isRequired,
@@ -124,7 +122,7 @@ export class TrendsContainer extends PureComponent {
       bgUnits: PropTypes.oneOf([MGDL_UNITS, MMOLL_UNITS]).isRequired,
     }).isRequired,
     currentPatientInViewId: PropTypes.string.isRequired,
-    extentSize: PropTypes.oneOf([ONE_WEEK, TWO_WEEKS, FOUR_WEEKS]).isRequired,
+    extentSize: PropTypes.number.isRequired,
     initialDatetimeLocation: PropTypes.string,
     loading: PropTypes.bool.isRequired,
     mostRecentDatetimeLocation: PropTypes.string,
@@ -261,9 +259,10 @@ export class TrendsContainer extends PureComponent {
     };
 
     this.selectDate = this.selectDate.bind(this);
+    this.determineDataToShow = this.determineDataToShow.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.mountData();
   }
 
@@ -330,8 +329,12 @@ export class TrendsContainer extends PureComponent {
   }
 
   getCurrentDay() {
-    const { dateDomain: { end } } = this.state;
-    return getLocalizedNoonBeforeUTC(end, this.props.timePrefs).toISOString();
+    const { dateDomain } = this.state;
+    if (dateDomain) {
+      return getLocalizedNoonBeforeUTC(dateDomain.end, this.props.timePrefs).toISOString();
+    } else {
+      return null;
+    }
   }
 
   setExtent(newDomain) {
@@ -398,7 +401,15 @@ export class TrendsContainer extends PureComponent {
   }
 
   render() {
-    const { start: currentStart, end: currentEnd } = this.state.dateDomain;
+    const { dateDomain } = this.state;
+
+    if (_.isNull(dateDomain)) {
+      // Datas have not yet been mounted.
+      return (<div />);
+    }
+
+    const { start: currentStart, end: currentEnd } = dateDomain;
+
     const prevStart = _.get(this.state, ['previousDateDomain', 'start']);
     const prevEnd = _.get(this.state, ['previousDateDomain', 'end']);
     let start = currentStart;
@@ -410,6 +421,7 @@ export class TrendsContainer extends PureComponent {
         start = prevStart;
       }
     }
+
     return (
       <TrendsSVGContainer
         activeDays={this.props.activeDays}

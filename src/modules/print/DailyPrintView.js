@@ -47,6 +47,8 @@ import {
   formatLocalizedFromUTC,
   formatDuration,
   getOffset,
+  getSimpleHourFormat,
+  getLongFormat,
 } from '../../utils/datetime';
 import {
   formatBgValue,
@@ -201,7 +203,7 @@ class DailyPrintView extends PrintView {
     const start = _.head(charts).date;
     const end = _.last(charts).date;
 
-    super.newPage(this.getDateRange(start, end, 'YYYY-MM-DD'));
+    super.newPage(this.getDateRange(start, end, t('YYYY-MM-DD')));
     this.renderLegend();
   }
 
@@ -395,7 +397,7 @@ class DailyPrintView extends PrintView {
       .fillOpacity(1)
       .font(this.boldFont)
       .fontSize(this.summaryHeaderFontSize)
-      .text(moment(date, 'YYYY-MM-DD').format('ddd, MMM D, Y'), this.margins.left, topEdge);
+      .text(moment(date, 'YYYY-MM-DD').format(getLongFormat()), this.margins.left, topEdge);
 
     const yPos = (function (doc) { // eslint-disable-line func-names
       let value = topEdge + doc.currentLineHeight() * 1.5;
@@ -668,9 +670,9 @@ class DailyPrintView extends PrintView {
       if (i < 8) {
         chart.bolusDetailPositions[i] = xPos;
 
-        this.doc.font(this.font).fontSize(this.smallFontSize)
+        this.doc.font(this.font).fontSize(this.extraSmallFontSize)
           .text(
-            formatLocalizedFromUTC(loc, this.timePrefs, 'ha').slice(0, -1),
+            formatLocalizedFromUTC(loc, this.timePrefs, getSimpleHourFormat()),
             xPos,
             topEdge,
             { indent: 3 },

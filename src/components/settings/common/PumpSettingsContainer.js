@@ -22,13 +22,14 @@ import { connect } from 'react-redux';
 import { MGDL_UNITS, MMOLL_UNITS } from '../../../utils/constants';
 import NonTandem from '../NonTandem';
 import Tandem from '../Tandem';
+import Diabeloop from '../Diabeloop';
 
 export class PumpSettingsContainer extends PureComponent {
   static propTypes = {
     bgUnits: PropTypes.oneOf([MGDL_UNITS, MMOLL_UNITS]).isRequired,
     copySettingsClicked: PropTypes.func.isRequired,
     manufacturerKey: PropTypes.oneOf(
-      ['animas', 'carelink', 'insulet', 'medtronic', 'tandem']
+      ['animas', 'carelink', 'insulet', 'medtronic', 'tandem', 'diabeloop']
     ).isRequired,
     // see more specific schema in NonTandem and Tandem components!
     pumpSettings: PropTypes.shape({
@@ -40,6 +41,7 @@ export class PumpSettingsContainer extends PureComponent {
     }).isRequired,
     settingsState: PropTypes.object.isRequired,
     toggleSettingsSection: PropTypes.func.isRequired,
+    onSwitchToDaily: PropTypes.func,
   }
 
   componentWillMount() {
@@ -68,39 +70,56 @@ export class PumpSettingsContainer extends PureComponent {
       timePrefs,
       toggleSettingsSection,
     } = this.props;
-    const supportedNonTandemPumps = ['animas', 'carelink', 'insulet', 'medtronic'];
+
     const toggleFn = _.partial(toggleSettingsSection, manufacturerKey);
 
-    if (manufacturerKey === 'tandem') {
-      return (
-        <Tandem
-          bgUnits={bgUnits}
-          copySettingsClicked={copySettingsClicked}
-          deviceKey={manufacturerKey}
-          openedSections={settingsState[manufacturerKey]}
-          pumpSettings={pumpSettings}
-          timePrefs={timePrefs}
-          toggleProfileExpansion={toggleFn}
-          user={user}
-        />
-      );
-    } else if (_.includes(supportedNonTandemPumps, manufacturerKey)) {
-      return (
-        <NonTandem
-          bgUnits={bgUnits}
-          copySettingsClicked={copySettingsClicked}
-          deviceKey={manufacturerKey}
-          openedSections={settingsState[manufacturerKey]}
-          pumpSettings={pumpSettings}
-          timePrefs={timePrefs}
-          toggleBasalScheduleExpansion={toggleFn}
-          user={user}
-        />
-      );
+    switch (manufacturerKey) {
+      case 'tandem':
+        return (
+          <Tandem
+            bgUnits={bgUnits}
+            copySettingsClicked={copySettingsClicked}
+            deviceKey={manufacturerKey}
+            openedSections={settingsState[manufacturerKey]}
+            pumpSettings={pumpSettings}
+            timePrefs={timePrefs}
+            toggleProfileExpansion={toggleFn}
+            user={user}
+          />
+        );
+      case 'diabeloop':
+
+        return (
+          <Diabeloop
+            copySettingsClicked={copySettingsClicked}
+            deviceKey={manufacturerKey}
+            pumpSettings={pumpSettings}
+            timePrefs={timePrefs}
+            user={user}
+            handleClickHistory={(dateTime, title) => this.props.onSwitchToDaily(dateTime, title)}
+          />
+        );
+      case 'animas':
+      case 'carelink':
+      case 'insulet':
+      case 'medtronic':
+        return (
+          <NonTandem
+            bgUnits={bgUnits}
+            copySettingsClicked={copySettingsClicked}
+            deviceKey={manufacturerKey}
+            openedSections={settingsState[manufacturerKey]}
+            pumpSettings={pumpSettings}
+            timePrefs={timePrefs}
+            toggleBasalScheduleExpansion={toggleFn}
+            user={user}
+          />
+        );
+      default:
+        // eslint-disable-next-line no-console
+        console.warn(`Unknown manufacturer key: [${manufacturerKey}]!`);
+        return null;
     }
-    // eslint-disable-next-line no-console
-    console.warn(`Unknown manufacturer key: [${manufacturerKey}]!`);
-    return null;
   }
 }
 

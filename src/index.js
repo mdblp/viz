@@ -15,9 +15,11 @@
  * == BSD2 LICENSE ==
  */
 
-require('./styles/colors.css');
+import './styles/colors.css';
 
 import _ from 'lodash';
+import i18next from 'i18next';
+
 import CBGDateTraceLabel from './components/trends/cbg/CBGDateTraceLabel';
 import FocusedRangeLabels from './components/trends/common/FocusedRangeLabels';
 import FocusedSMBGPointLabel from './components/trends/smbg/FocusedSMBGPointLabel';
@@ -33,6 +35,9 @@ import SMBGTooltip from './components/daily/smbgtooltip/SMBGTooltip';
 import Stat from './components/common/stat/Stat';
 import CBGTooltip from './components/daily/cbgtooltip/CBGTooltip';
 import FoodTooltip from './components/daily/foodtooltip/FoodTooltip';
+import PhysicalTooltip from './components/daily/physicaltooltip/PhysicalTooltip';
+import ReservoirTooltip from './components/daily/reservoirtooltip/ReservoirTooltip';
+import ParameterTooltip from './components/daily/parametertooltip/ParameterTooltip';
 
 import { formatBgValue } from './utils/format';
 import { reshapeBgClassesToBgBounds } from './utils/bloodglucose';
@@ -64,7 +69,6 @@ import {
   processBasicsAggregations,
 } from './utils/basics/data';
 
-const i18next = require('i18next');
 if (_.get(i18next, 'options.returnEmptyString') === undefined) {
   // Return key if no translation is present
   i18next.init({ returnEmptyString: false, nsSeparator: '|' });
@@ -84,6 +88,9 @@ const components = {
   Stat,
   CBGTooltip,
   FoodTooltip,
+  PhysicalTooltip,
+  ReservoirTooltip,
+  ParameterTooltip,
 };
 
 const containers = {

@@ -15,6 +15,8 @@
  * == BSD2 LICENSE ==
  */
 
+import i18next from 'i18next';
+
 import BasicsPrintView from '../../../src/modules/print/BasicsPrintView';
 import PrintView from '../../../src/modules/print/PrintView';
 import * as patients from '../../../data/patient/profiles';
@@ -224,12 +226,13 @@ describe('BasicsPrintView', () => {
 
     it('should render the sitechange calendar section with the appropriate data', () => {
       sinon.stub(Renderer, 'renderCalendarSection');
+      const t = i18next.t.bind(i18next);
 
       Renderer.renderCalendars();
       sinon.assert.calledWithMatch(Renderer.renderCalendarSection, {
         title: {
           text: Renderer.sections.siteChanges.title,
-          subText: `from '${Renderer.sections.siteChanges.subTitle}'`,
+          subText: `${t('from ')}${Renderer.sections.siteChanges.subTitle}`,
         },
         data: Renderer.aggregationsByDate.siteChanges.byDate,
         type: 'siteChange',

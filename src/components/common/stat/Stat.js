@@ -1,9 +1,11 @@
 /* global document */
 
-import React, { PropTypes, PureComponent } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import bows from 'bows';
 import cx from 'classnames';
+import i18next from 'i18next';
 import { SizeMe } from 'react-sizeme';
 import { VictoryBar, VictoryContainer } from 'victory';
 import { Collapse } from 'react-collapse';
@@ -25,6 +27,8 @@ import CollapseIconClose from './assets/chevron-right-24-px.svg';
 import InfoIcon from './assets/info-outline-24-px.svg';
 import InputGroup from '../controls/InputGroup';
 
+const t = i18next.t.bind(i18next);
+
 const dataPathPropType = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.array,
@@ -38,7 +42,7 @@ const datumPropType = PropTypes.shape({
 
 const statFormatPropType = PropTypes.oneOf(_.values(statFormats));
 
-class Stat extends PureComponent {
+class Stat extends React.PureComponent {
   static propTypes = {
     alwaysShowTooltips: PropTypes.bool,
     alwaysShowSummary: PropTypes.bool,

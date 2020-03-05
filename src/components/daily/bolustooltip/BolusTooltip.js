@@ -18,7 +18,7 @@
 import React, { PropTypes, PureComponent } from 'react';
 import _ from 'lodash';
 import * as bolusUtils from '../../../utils/bolus';
-import { formatLocalizedFromUTC, formatDuration } from '../../../utils/datetime';
+import { formatLocalizedFromUTC, formatDuration, getHourMinuteFormat } from '../../../utils/datetime';
 import { formatInsulin, formatBgValue } from '../../../utils/format';
 import { getAnnotationMessages } from '../../../utils/annotations';
 import Tooltip from '../../common/tooltips/Tooltip';
@@ -343,7 +343,12 @@ class BolusTooltip extends PureComponent {
   render() {
     const title = (
       <div className={styles.title}>
-        {formatLocalizedFromUTC(this.props.bolus.normalTime, this.props.timePrefs, 'h:mm a')}
+        {
+          formatLocalizedFromUTC(
+            this.props.bolus.normalTime,
+            this.props.timePrefs,
+            getHourMinuteFormat())
+        }
       </div>
     );
     return <Tooltip {...this.props} title={title} content={this.renderBolus()} />;
