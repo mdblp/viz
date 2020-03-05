@@ -390,43 +390,28 @@ describe('Stat', () => {
     });
 
     it('should call the `renderCalculatedOutput` method when the stat type is `input`', () => {
-      const statProps = { ...defaultProps };
-      statProps.type = stat.statTypes.input;
-
-      const statComp = shallow(<Stat {...statProps} />);
-      const statInstance = statComp.instance();
-
-      const renderCalculatedOutputSpy = sinon.spy(statInstance, 'renderCalculatedOutput');
+      const renderCalculatedOutputSpy = sinon.spy(instance, 'renderCalculatedOutput');
       sinon.assert.callCount(renderCalculatedOutputSpy, 0);
 
-      instance.props.type = stat.statTypes.input;
-      instance.renderStatFooter();
+      wrapper.setProps({ type: stat.statTypes.input });
+      wrapper.setState({ showFooter: true });
       sinon.assert.callCount(renderCalculatedOutputSpy, 1);
     });
 
     it('should call the `renderStatLegend` method when the `legend` prop is `true`', () => {
-      const statProps = { ...defaultProps };
-      statProps.legend = true;
-      const statComp = shallow(<Stat {...statProps} />);
-      const statInstance = statComp.instance();
-
-      const renderStatLegendSpy = sinon.spy(statInstance, 'renderStatLegend');
+      const renderStatLegendSpy = sinon.spy(instance, 'renderStatLegend');
       sinon.assert.callCount(renderStatLegendSpy, 0);
 
-      statInstance.renderStatFooter();
+      wrapper.setProps({ legend: true });
+      wrapper.setState({ showFooter: true });
       sinon.assert.callCount(renderStatLegendSpy, 1);
     });
 
     it('should call the `renderStatUnits` method when the stat type is `true`', () => {
-      const statProps = { ...defaultProps };
-      statProps.units = 'myUnits';
-      const statComp = shallow(<Stat {...statProps} />);
-      const statInstance = statComp.instance();
-
-      const renderStatUnitsSpy = sinon.spy(statInstance, 'renderStatUnits');
+      const renderStatUnitsSpy = sinon.spy(instance, 'renderStatUnits');
       sinon.assert.callCount(renderStatUnitsSpy, 0);
 
-      statInstance.renderStatFooter();
+      wrapper.setProps({ units: 'myUnits' });
       sinon.assert.callCount(renderStatUnitsSpy, 1);
     });
   });

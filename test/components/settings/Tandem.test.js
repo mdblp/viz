@@ -25,7 +25,6 @@ import Tandem from '../../../src/components/settings/Tandem';
 import { MGDL_UNITS, MMOLL_UNITS } from '../../../src/utils/constants';
 import { formatDecimalNumber } from '../../../src/utils/format';
 
-
 const flatrateData = require('../../../data/pumpSettings/tandem/flatrate.json');
 const multirateData = require('../../../data/pumpSettings/tandem/multirate.json');
 
@@ -114,7 +113,7 @@ describe('Tandem', () => {
     const mounted = mount(<Tandem {...props} />);
     const clipBoardButton = mounted.find('ClipboardButton').at(0);
     expect(copySettingsClicked.callCount).to.equal(0);
-    clipBoardButton.simulate('click');
+    clipBoardButton.prop('onSuccess')();
     expect(copySettingsClicked.callCount).to.equal(1);
   });
 

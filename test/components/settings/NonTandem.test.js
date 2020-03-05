@@ -15,7 +15,7 @@
  * == BSD2 LICENSE ==
  */
 
- /* eslint no-console:0 */
+/* eslint no-console:0 */
 
 import React from 'react';
 // because the component is wrapped, can't use shallow
@@ -37,6 +37,7 @@ const omnipodMultiRateData = require('../../../data/pumpSettings/omnipod/multira
 const medtronicMultiRateData = require('../../../data/pumpSettings/medtronic/multirate.json');
 const medtronicAutomatedData = require('../../../data/pumpSettings/medtronic/automated.json');
 
+const copySettingsClicked = sinon.spy();
 const timePrefs = { timezoneAware: false, timezoneName: 'Europe/London' };
 const user = {
   profile: {
@@ -48,17 +49,12 @@ const user = {
   },
 };
 
+afterEach(() => {
+  copySettingsClicked.resetHistory();
+});
+
 describe('NonTandem', () => {
-  let copySettingsClicked = null;
   const activeAtUploadText = 'Active at upload';
-
-  before(() => {
-    copySettingsClicked = sinon.spy();
-  });
-
-  afterEach(() => {
-    copySettingsClicked.resetHistory();
-  });
 
   describe('Animas', () => {
     it('should have a header', () => {
@@ -178,7 +174,7 @@ describe('NonTandem', () => {
       );
       const clipBoardButton = mounted.find('ClipboardButton').at(0);
       expect(copySettingsClicked.callCount).to.equal(0);
-      clipBoardButton.simulate('click');
+      clipBoardButton.prop('onSuccess')();
       expect(copySettingsClicked.callCount).to.equal(1);
     });
     describe('bolus settings', () => {
@@ -437,7 +433,7 @@ describe('NonTandem', () => {
         );
         const clipBoardButton = mounted.find('ClipboardButton').at(0);
         expect(copySettingsClicked.callCount).to.equal(0);
-        clipBoardButton.simulate('click');
+        clipBoardButton.prop('onSuccess')();
         expect(copySettingsClicked.callCount).to.equal(1);
       });
     });
@@ -581,7 +577,7 @@ describe('NonTandem', () => {
       );
       const clipBoardButton = mounted.find('ClipboardButton').at(0);
       expect(copySettingsClicked.callCount).to.equal(0);
-      clipBoardButton.simulate('click');
+      clipBoardButton.prop('onSuccess')();
       expect(copySettingsClicked.callCount).to.equal(1);
     });
 
