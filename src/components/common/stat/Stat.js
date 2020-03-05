@@ -152,7 +152,7 @@ class Stat extends React.PureComponent {
           >
             <img
               src={InfoIcon}
-              alt="Hover for more info"
+              alt={t('Hover for more info')}
               ref={this.setTooltipIconRef}
               onMouseOver={this.handleTooltipIconMouseOver}
               onMouseOut={this.handleTooltipIconMouseOut}

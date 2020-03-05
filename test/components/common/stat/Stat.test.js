@@ -391,7 +391,7 @@ describe('Stat', () => {
 
     it('should call the `renderCalculatedOutput` method when the stat type is `input`', () => {
       const statProps = { ...defaultProps };
-      statProps.type = statTypes.input;
+      statProps.type = stat.statTypes.input;
 
       const statComp = shallow(<Stat {...statProps} />);
       const statInstance = statComp.instance();

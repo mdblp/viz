@@ -18,7 +18,6 @@
 /* eslint-disable lodash/prefer-lodash-method */
 
 import _ from 'lodash';
-import i18next from 'i18next';
 import moment from 'moment';
 import i18next from 'i18next';
 
@@ -43,8 +42,6 @@ import {
   SITE_CHANGE,
   DIABELOOP,
 } from '../../utils/constants';
-
-const t = i18next.t.bind(i18next);
 
 const siteChangeCannulaImage = require('./images/sitechange-cannula.png');
 const siteChangeReservoirImage = require('./images/sitechange-reservoir.png');
