@@ -9,13 +9,10 @@ export const HoverBarLabel = props => {
   const {
     barWidth,
     isDisabled,
-    datum = { x: 0, y: 0 },
+    datum,
     domain,
-    scale = {
-      x: _.noop,
-      y: _.noop,
-    },
-    style = {},
+    scale,
+    style,
     text,
     tooltipText,
   } = props;
@@ -100,12 +97,18 @@ export const HoverBarLabel = props => {
 };
 
 HoverBarLabel.propTypes = {
-  datum: PropTypes.object.isRequired,
+  datum: PropTypes.object,
   domain: PropTypes.object.isRequired,
   isDisabled: PropTypes.func.isRequired,
   text: PropTypes.func.isRequired,
   scale: PropTypes.object,
-  y: PropTypes.number,
+  style: PropTypes.object,
+};
+
+HoverBarLabel.defaultProps = {
+  datum: { x: 0, y: 0 },
+  scale: { x: _.noop, y: _.noop },
+  style: {},
 };
 
 HoverBarLabel.displayName = 'HoverBarLabel';
