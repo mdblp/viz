@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-import { formatLocalizedFromUTC, getHourMinuteFormat, getTimezoneFromTimePrefs } from '../../../utils/datetime';
+import { formatLocalizedFromUTC, getHourMinuteFormat } from '../../../utils/datetime';
 import styles from './Tooltip.css';
 
 class Tooltip extends React.PureComponent {
@@ -169,12 +169,16 @@ class Tooltip extends React.PureComponent {
       let titleNode = null;
       if (dateTitle.source === 'Diabeloop') {
         // For diabeloop device, use the timezone of the object
+        const { timezoneName, timezoneOffset } = dateTitle.timePrefs;
         const mNormalTime = moment.tz(dateTitle.normalTime, dateTitle.timezone);
-        const timelineTimezone = getTimezoneFromTimePrefs(dateTitle.timePrefs);
+        // const timelineTimezone = getTimezoneFromTimePrefs(dateTitle.timePrefs);
         let displayOffset = null;
-        if (timelineTimezone !== dateTitle.timezone) {
+        if (timezoneName !== dateTitle.timezone) {
           // Not the same timezone than the timePrefs, so make it visible
           displayOffset = ` UTC${mNormalTime.format('Z')}`;
+        } else if (timezoneOffset !== mNormalTime.utcOffset()) {
+          // Not the same offset than the current one
+          displayOffset = ` UTC${mNormalTime.format('Z z')}`;
         }
         titleNode = (
           <div className={styles.title}>
@@ -248,7 +252,8 @@ Tooltip.propTypes = {
     source: PropTypes.string.isRequired,
     timePrefs: PropTypes.shape({
       timezoneAware: PropTypes.bool.isRequired,
-      timezoneName: PropTypes.string,
+      timezoneName: PropTypes.string.isRequired,
+      timezoneOffset: PropTypes.number.isRequired,
     }).isRequired,
   }),
   content: PropTypes.node,
