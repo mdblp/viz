@@ -5,7 +5,7 @@
   "keywords": [
     "data visualization"
   ],
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
     "apidocs": "jsdoc2md",
     "browser-tests": "NODE_ENV=test karma start --browsers Chrome",
@@ -17,7 +17,6 @@
     "build-storybooks": "build-storybook -c storybook -o web/stories && build-storybook -c storybookDatatypes -o web/diabetes-data-stories",
     "clean": "NODE_ENV=production rimraf ./dist/*",
     "lint": "NODE_ENV=test eslint src/ stories/ storiesDatatypes/ test/ *.js",
-    "prepare": "NODE_ENV=production npm run build",
     "pretest": "NODE_ENV=test npm run lint",
     "serve-docs": "gitbook serve",
     "start": "NODE_ENV=development webpack --config package.config.js --watch",
