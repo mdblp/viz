@@ -5,6 +5,10 @@ This node package is a dependency of Blip and was forked from tidepool/viz.
 ### Engineering use
 - PT-1249 Reduce blip & viz build time.
 
+## 0.11.3 - 2020-04-17
+### Fixed
+- PT-1230 CGM / BGM labels don't change with language
+
 ## 0.11.2 - 2020-03-10
 ### Changed
 - PT-1113 Change basal insulin colors in widget and graph
