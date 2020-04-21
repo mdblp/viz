@@ -86,7 +86,7 @@ class ParameterTooltip extends React.Component {
       };
     }
 
-    const content = this.renderParameters(this.props.parameter.params);
+    const content = this.renderParameters(parameter.params);
     return (
       <Tooltip
         {...this.props}
