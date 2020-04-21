@@ -21,40 +21,56 @@ import _ from 'lodash';
 import i18next from 'i18next';
 
 import { formatLocalizedFromUTC, getHourMinuteFormat } from '../../../utils/datetime';
-
+import { formatParameterValue } from '../../../utils/format';
 import Tooltip from '../../common/tooltips/Tooltip';
 import colors from '../../../styles/colors.css';
 import styles from './ParameterTooltip.css';
 
 class ParameterTooltip extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.hourMinuteFormat = getHourMinuteFormat();
+  }
+
   renderParameter(parameter) {
-    const prev = (parameter.previousValue !== undefined)
-      ? <div className={styles.previous}>{parameter.previousValue}&rarr;</div>
-      : <div>&nbsp;</div>;
-    return (
-      <div className={styles.pa} key={parameter.id}>
-        <div className={styles.date}>{
-          formatLocalizedFromUTC(
-            parameter.normalTime,
-            this.props.timePrefs,
-            getHourMinuteFormat())
-          }
-        </div>
-        <div className={styles.label}>{i18next.t(`params:::${parameter.name}`)} </div>
-        {prev}
-        <div className={styles.value}>{parameter.value}</div>
-        <div className={styles.units}>{i18next.t(`${parameter.units}`)}</div>
-      </div>
-    );
+    let previousValue = null;
+    let prevToNext = null;
+    let valueClassName = styles.value;
+    if (typeof parameter.previousValue === 'string') {
+      const previous = formatParameterValue(parameter.previousValue, parameter.units);
+      previousValue = <span className={styles.previous} key={`${parameter.id}-prev`}>{previous}</span>;
+      prevToNext = <span key={`${parameter.id}-arrow`}>&rarr;</span>;
+    } else {
+      valueClassName = `${valueClassName} ${styles['value-no-prev']}`;
+    }
+
+    const displayHour = formatLocalizedFromUTC(
+      parameter.normalTime, this.props.timePrefs, this.hourMinuteFormat);
+
+    const value = formatParameterValue(parameter.value, parameter.units);
+
+    return [
+      <span className={styles.date} key={`${parameter.id}-date`}>{displayHour}</span>,
+      <span className={styles.label} key={`${parameter.id}-name`}>{i18next.t(`params:::${parameter.name}`)}</span>,
+      previousValue,
+      prevToNext,
+      <span className={valueClassName} key={`${parameter.id}-value`}>{value}</span>,
+      <span className={styles.units} key={`${parameter.id}-units`}>{i18next.t(`${parameter.units}`)}</span>,
+    ];
   }
 
   renderParameters(parameters) {
     const rows = [];
     for (let i = 0; i < parameters.length; ++i) {
-      rows.push(this.renderParameter(parameters[i]));
+      Array.prototype.push.apply(rows, this.renderParameter(parameters[i]));
     }
 
-    return <div className={styles.container}>{rows}</div>;
+    return (
+      <div className={styles.container}>
+        {rows}
+      </div>
+    );
   }
 
   render() {
@@ -70,12 +86,13 @@ class ParameterTooltip extends React.Component {
       };
     }
 
+    const content = this.renderParameters(this.props.parameter.params);
     return (
       <Tooltip
         {...this.props}
         title={title}
         dateTitle={dateTitle}
-        content={this.renderParameters(this.props.parameter.params)}
+        content={content}
       />
     );
   }
